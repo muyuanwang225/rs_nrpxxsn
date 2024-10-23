@@ -1,0 +1,298 @@
+#
+#  Author  : muyuanwang
+#  Email   : muyuan.wang@ess.eu
+#  Project : nrpxxsn measurement
+#
+##### Macros
+# P: prefix
+# R: record root
+# N: pm number
+#
+
+# asyn diagnostic PV
+record(asyn, "$(P)$(R)Asyn") {
+    field(DTYP, "asynRecordDevice")
+    field(PORT, "$(PORT)")
+}
+
+record(bi, "$(P)$(R)Connected-RB") {
+    field(DESC, "Connection state")
+    field(INP,  "$(P)$(R)Asyn.CNCT CP")
+    field(ONAM, "Connected")
+    field(ZNAM, "Disconnected")
+    field(ZSV,  "MAJOR")
+}
+
+record(calc, "$(P)$(R)iConnectEventGen") {
+    field(DESC, "generate connection 'event'")
+    field(INPA, "$(P)$(R)Asyn.CNCT CP")
+    field(CALC, "A")
+    field(VAL,  "0")
+}
+
+record(ai, "$(P)$(R)#Init") {
+    field(DESC, "initialization when iocboot")
+    field(DTYP, "stream")
+    field(INP,  "@nrpxxsn.proto init($(P)$(R)Offset-SP.VAL,$(P)$(R)iSrcUpdateRB.PROC) $(PORT)")
+    field(PINI, "YES")
+}
+
+record(stringin, "$(P)$(R)Manufactor-RB") {
+    field(DESC, "instrument identification")
+    field(DTYP, "stream")
+    field(INP,  "@nrpxxsn.proto read_string(*IDN) $(PORT)")
+}
+
+record(stringin, "$(P)$(R)Desc") {
+    field(DESC, "power sensor description")
+    field(VAL,  "PM0$(N)")
+    field(PINI, "1")
+
+    info(autosaveFields, "VAL")
+}
+
+record(bo, "$(P)$(R)ShowEacc") {
+    field(DESC, "Eacc (un)checked")
+    field(VAL,  "0")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+
+    info(autosaveFields, "VAL")
+}
+
+record(ao, "$(P)$(R)EaccFactor") {
+    field(DESC, "cavity gradient kt")
+    field(VAL,  "1")
+    field(PREC, "3")
+
+    info(autosaveFields, "VAL")
+}
+
+record(seq, "$(P)$(R)iSrcUpdateRB") {
+    field(DESC, "updated PVs reading")
+    field(SELM, "All")
+    field(LNK0, "$(P)$(R)Manufactor-RB.PROC")
+    field(LNK1, "$(P)$(R)mesMode-RB.PROC")
+    field(LNK2, "$(P)$(R)Freq-RB.PROC")
+    field(LNK3, "$(P)$(R)Offset-RB.PROC")
+    field(LNK4, "$(P)$(R)OffsetEn-RB.PROC")
+    field(LNK5, "$(P)$(R)AvgEn-RB.PROC")
+    field(LNK6, "$(P)$(R)AvgCount-RB.PROC")
+    field(LNK7, "$(P)$(R)AvgCountMode-RB.PROC")
+    field(LNK8, "$(P)$(R)FastMes-RB.PROC")
+    field(LNK9, "$(P)$(R)Aper-RB.PROC")
+    field(LNKA, "$(P)$(R)iSrcUpdateRB2.PROC")
+}
+
+record(seq, "$(P)$(R)iSrcUpdateRB2") {
+    field(DESC, "updated PVs reading 2")
+    field(SELM, "All")
+    field(LNK0, "$(P)$(R)TraceTime-RB.PROC")
+    field(LNK1, "$(P)$(R)TraceOffset-RB.PROC")
+    field(LNK2, "$(P)$(R)TracePoints-RB.PROC")
+    field(LNK3, "$(P)$(R)TraceAveCountEn-RB.PROC")
+    field(LNK4, "$(P)$(R)TraceAveCount-RB.PROC")
+    field(LNK5, "$(P)$(R)TrigSrc-RB.PROC")
+    field(LNK6, "$(P)$(R)TrigLvl-RB.PROC")
+    field(LNK7, "$(P)$(R)TrigSlope-RB.PROC")
+}
+
+record(ai, "$(P)$(R)Reset") {
+    field(DESC, "instrument resetting")
+    field(DTYP, "stream")
+    field(INP,  "@nrpxxsn.proto reset($(P)$(R)iSrcUpdateRB.PROC) $(PORT)")
+    field(VAL,  "0")
+}
+
+record(bo, "$(P)$(R)mes") {
+    field(DESC, "start measurement")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+    field(VAL,  "0")
+}
+
+record(stringout, "$(P)$(R)Single") {
+    field(DESC, "start a single measurement cycle")
+    field(DTYP, "stream")
+    field(OUT,  "@nrpxxsn.proto single $(PORT)")
+}
+
+record(ai, "$(P)$(R)ScanTime") {
+    field(DESC, "updated by sequence for fetching data")
+    field(EGU,  "s")
+    field(PREC, "3")
+}
+
+record(ai, "$(P)$(R)ScanDelay") {
+    field(DESC, "sequence delay between data scans")
+    field(EGU,  "s")
+    field(PREC, "3")
+    field(VAL,  "1")
+    field(PINI, "1")
+}
+
+record(mbbo, "$(P)$(R)mesMode-SP") {
+    field(DESC, "sensor function setpoint")
+    field(OMSL, "supervisory")
+    field(DTYP, "stream")
+    field(OUT,  "@nrpxxsn.proto write_string(SENS:FUNC) $(PORT)")
+    field(VAL,  "1")
+    field(ZRVL, "0")
+    field(ZRST, "\"POW:AVG\"")
+    field(ONVL, "1")
+    field(ONST, "\"XTIM:POW\"")
+    field(FLNK, "$(P)$(R)mesMode-RB")
+}
+
+record(mbbi, "$(P)$(R)mesMode-RB") {
+    field(DESC, "sensor function readback")
+    field(DTYP, "stream")
+    field(INP,  "@nrpxxsn.proto read_string(SENS:FUNC) $(PORT)")
+    field(ZRVL, "0")
+    field(ZRST, "\"POW:AVG\"")
+    field(ONVL, "1")
+    field(ONST, "\"XTIM:POW\"")
+}
+
+record(seq, "$(P)$(R)Proc") {
+    field(DESC, "measurement method process")
+    field(SELM, "Specified")
+    field(SELL, "$(P)$(R)mesMode-RB")
+    field(LNK0, "$(P)$(R)ScalarPowerW.PROC")
+    field(LNK1, "$(P)$(R)WFPowerW.PROC")
+}
+
+record(ai, "$(P)$(R)ScalarPowerW") {
+    field(DESC, "scalar data readback in watts")
+    field(DTYP, "stream")
+    field(INP,  "@nrpxxsn.proto fetch(FORM ASC,3,UNIT:POW W,FETCh) $(PORT)")
+    field(PREC, "3")
+    field(EGU,  "w")
+    field(FLNK, "$(P)$(R)ScalarPowerDBM")
+}
+
+record(calc, "$(P)$(R)ScalarPowerDBM") {
+    field(DESC, "scalar data readback in dbm")
+    field(INPA, "$(P)$(R)ScalarPowerW")
+    field(CALC, "10*LOG(ABS(A))+30")
+    field(PREC, "3")
+    field(EGU,  "dBm")
+}
+
+record(waveform, "$(P)$(R)WFPowerW") {
+    field(DESC, "waveform data readback in watts")
+    field(DTYP, "stream")
+    field(INP,  "@nrpxxsn.proto fetch(FORM ASC,3,UNIT:POW W,FETCh) $(PORT)")
+    field(FTVL, "DOUBLE")
+    field(EGU,  "w")
+    field(NELM, "5000")
+    field(FLNK, "$(P)$(R)#WFParse")
+    field(TPRO, "0")
+}
+
+record(aSub, "$(P)$(R)#WFParse") {
+    field(DESC, "Intern. waveform parsing")
+    field(SNAM, "parse_waveform")
+    field(BRSV, "MINOR")
+    #
+    field(INPA, "$(P)$(R)mes CP")
+    field(FTA,  "SHORT")
+    field(INPB, "$(P)$(R)mesMode-RB")
+    field(FTB,  "SHORT")
+    field(INPC, "$(P)$(R)WFPowerW")
+    field(NOC,  "5000")
+    field(INPD, "$(P)$(R)TraceTime-RB")
+    field(INPE, "$(P)$(R)TraceOffset-RB")
+    field(INPF, "$(P)$(R)TrigSrc-RB")
+    field(FTF,  "STRING")
+    field(INPG, "$(P)$(R)TrigLvl-RB")
+    field(INPH, "$(P)$(R)EaccFactor")
+    # outputA: xaxis
+    field(OUTA, "$(P)$(R)TimeArray PP")
+    field(NOVA, "5000")
+    # outputB: yaxis in dbm
+    field(OUTB, "$(P)$(R)WFPowerDBM PP")
+    field(NOVB, "5000")
+    # outputC: yaxis in MV/m
+    field(OUTC, "$(P)$(R)WFEacc PP")
+    field(NOVC, "5000")
+    # outputD: yaxis unit
+    field(OUTD, "$(P)$(R)PowerWUnit PP")
+    field(FTVD, "SHORT")
+    field(NOVD, "1")
+    # outputE: trigger array in watts
+    field(OUTE, "$(P)$(R)WFTrigLvlW PP")
+    field(NOVE, "5000")
+    # outputF: trigger array in dbm
+    field(OUTF, "$(P)$(R)WFTrigLvlDBM PP")
+    field(NOVF, "5000")
+    #
+    field(TPRO, "0")
+}
+
+record(waveform, "$(P)$(R)TimeArray") {
+    field(DESC, "xaxis waveform")
+    field(NELM, "5000")
+    field(FTVL, "DOUBLE")
+    field(INP,  {const: []})
+    field(PREC, "3")
+    field(EGU,  "s")
+}
+
+record(waveform, "$(P)$(R)WFPowerDBM") {
+    field(DESC, "yaxis waveform in dbm")
+    field(FTVL, "DOUBLE")
+    field(NELM, "5000")
+    field(INP,  {const: []})
+    field(PREC, "3")
+    field(EGU,  "dBm")
+}
+
+record(waveform, "$(P)$(R)WFEacc") {
+    field(DESC, "yaxis waveform in MV/m")
+    field(FTVL, "DOUBLE")
+    field(NELM, "5000")
+    field(INP,  {const: []})
+    field(PREC, "3")
+    field(EGU,  "MV/m")
+}
+
+record(mbbi, "$(P)$(R)PowerWUnit") {
+    field(DESC, "yaxis waveform unit")
+    field(ZRVL, "0")
+    field(ZRST, "mW")
+    field(ONVL, "1")
+    field(ONST, "W")
+    field(TWVL, "2")
+    field(TWST, "kW")
+}
+
+record(waveform, "$(P)$(R)WFTrigLvlW") {
+    field(DESC, "trigger array in watts")
+    field(FTVL, "DOUBLE")
+    field(NELM, "5000")
+    field(INP,  {const: []})
+    field(PREC, "3")
+    field(EGU,  "W")
+}
+
+record(waveform, "$(P)$(R)WFTrigLvlDBM") {
+    field(DESC, "trigger array in dbm")
+    field(FTVL, "DOUBLE")
+    field(NELM, "5000")
+    field(INP,  {const: []})
+    field(PREC, "3")
+    field(EGU,  "dBm")
+}
+
+# exception handler to stop measurement (TIMEOUT)
+record(calcout, "$(P)$(R)#mesStop") {
+    field(DESC, "stop measurement when timeout")
+    field(INPA, "$(P)$(R)mesMode-RB")
+    field(INPB, "$(P)$(R)ScalarPowerW.STAT CP")
+    field(INPC, "$(P)$(R)WFPowerW.STAT CP")
+    field(CALC, "A?((C=9||C=10)?0:1):((B=9||B=10)?0:1)")
+    field(VAL,  "1")
+    field(OOPT, "Transition To Zero")
+    field(OUT,  "$(P)$(R)mes PP")
+}

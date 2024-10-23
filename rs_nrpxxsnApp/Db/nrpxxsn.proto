@@ -1,0 +1,172 @@
+# rs_nrpxxsn
+
+########################################
+#
+# Variable declaration
+#
+GLOBAL_TIMEOUT	= 5000;
+TERMINATOR	= NL;
+
+########################################
+#
+# System variables
+#
+InTerminator	= ${TERMINATOR};
+OutTerminator	= ${TERMINATOR};
+LockTimeout	= ${GLOBAL_TIMEOUT};
+ReplyTimeout	= ${GLOBAL_TIMEOUT};
+ReadTimeout	= ${GLOBAL_TIMEOUT};
+ExtraInput	= Ignore;
+Separator	= ",";
+
+########################################
+#
+# Helper variables
+#
+READ="\$1?";
+WRITE="\$1";
+
+########################################
+#
+# Exception handlers
+#
+#@replytimeout {
+#    disconnect;
+#}
+#
+#@readtimeout {
+#    disconnect;
+#}
+
+########################################
+#
+# return value parsers
+#
+parse_float {
+    in "%g";
+}
+
+parse_int {
+    in "%i";
+}
+
+parse_string {
+    in "%[^;]";
+}
+
+########################################
+#
+# Initialization when (re)connect to device
+#
+init {
+    out "*CLS";
+    out "*RST\n*OPC?";
+    in  "%*i";
+    out "INIT:CONT OFF";
+    out "FREQ 704.42E6";
+    out "CORR:OFFS %(\$1)g";
+    out "CORR:OFFS:STAT ON";
+    out "SENS:FUNC \"XTIM:POW\"";
+    out "AVER ON";
+    out "AVER:COUN 4";
+    out "AVER:COUN:AUTO OFF";
+    out "FAST OFF";
+    out "APER 20E-3";
+    out "TRAC:TIME 4E-3";
+    out "TRAC:OFFS:TIME -0.2E-3";
+    out "TRAC:POIN 1000";
+    out "TRAC:AVER:COUN 4";
+    out "TRAC:AVER:STAT OFF";
+    out "TRIG:SOUR EXTernal2";
+    out "TRIG:LEV 1E-6";
+    out "TRIG:SLOP POS";
+    out "*OPC?";
+    in  "%(\$2)i";
+}
+
+########################################
+#
+# start a single measurement
+#
+single {
+    out "*CLS";
+    out "INIT:IMM";
+}
+
+########################################
+#
+# reset device
+#
+reset {
+    out "*RST";
+    out "*OPC?";
+    in  "%(\$1)i";
+}
+
+########################################
+########################################
+##                                    ##
+##          INTEGER SUPPORT           ##
+##                                    ##
+########################################
+########################################
+
+########################################
+read_int {
+    out ${READ};
+    parse_int;
+}
+
+write_int {
+    out ${WRITE} " %i";
+}
+
+########################################
+########################################
+##                                    ##
+##           FLOAT SUPPORT            ##
+##                                    ##
+########################################
+########################################
+
+########################################
+read_float {
+    out ${READ};
+    parse_float;
+}
+
+write_float {
+    out ${WRITE} " %g";
+}
+
+########################################
+########################################
+##                                    ##
+##           STRING SUPPORT           ##
+##                                    ##
+########################################
+########################################
+
+########################################
+read_string {
+    out ${READ};
+    parse_string;
+}
+
+write_string {
+    out ${WRITE} " %s";
+}
+
+########################################
+########################################
+##                                    ##
+##            POWER SUPPORT           ##
+##                                    ##
+########################################
+########################################
+
+########################################
+fetch {
+    out "\$1,\$2\n\$3\n\$4?";
+    parse_float;
+}

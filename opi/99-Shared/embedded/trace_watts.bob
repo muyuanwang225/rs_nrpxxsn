@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<display version="2.0.0">
+  <name>Watts_plot</name>
+  <width>760</width>
+  <height>400</height>
+  <widget type="xyplot" version="2.0.0">
+    <name>X/Y Plot</name>
+    <width>760</width>
+    <height>400</height>
+    <show_legend>false</show_legend>
+    <scripts>
+      <script file="EmbeddedPy" check_connections="false">
+        <text><![CDATA[# Embedded python script
+from org.csstudio.display.builder.runtime.script import PVUtil, ScriptUtil
+
+## rebuild yaxis
+unit=PVUtil.getDouble(pvs[0])
+if unit == 0:
+	widget.setPropertyValue('y_axes[0].title', u"Power [mw]")
+	widget.setPropertyValue('traces[0].y_pv', "=arrayDivScalar('"+str(pvs[1])+"',1e-3)")
+	widget.setPropertyValue('traces[1].y_pv', "=arrayDivScalar('"+str(pvs[2])+"',1e-3)")
+elif unit == 1:
+	widget.setPropertyValue('y_axes[0].title', u"Power [w]")
+	widget.setPropertyValue('traces[0].y_pv', pvs[1])
+	widget.setPropertyValue('traces[1].y_pv', pvs[2])
+elif unit == 2:
+	widget.setPropertyValue('y_axes[0].title', u"Power [kw]")
+	widget.setPropertyValue('traces[0].y_pv', "=arrayDivScalar('"+str(pvs[1])+"',1e3)")
+	widget.setPropertyValue('traces[1].y_pv', "=arrayDivScalar('"+str(pvs[2])+"',1e3)")]]></text>
+        <pv_name>$(P)$(R)PowerWUnit</pv_name>
+        <pv_name trigger="false">$(P)$(R)WFPowerW</pv_name>
+        <pv_name trigger="false">$(P)$(R)WFTrigLvlW</pv_name>
+      </script>
+    </scripts>
+    <x_axis>
+      <title>Time [ms]</title>
+      <autoscale>true</autoscale>
+      <log_scale>false</log_scale>
+      <minimum>0.0</minimum>
+      <maximum>10.0</maximum>
+      <show_grid>true</show_grid>
+      <title_font>
+        <font name="Default Bold" family="Source Sans Pro" style="BOLD" size="16.0">
+        </font>
+      </title_font>
+      <scale_font>
+        <font name="Default" family="Source Sans Pro" style="REGULAR" size="16.0">
+        </font>
+      </scale_font>
+      <visible>true</visible>
+    </x_axis>
+    <y_axes>
+      <y_axis>
+        <title>Power [w]</title>
+        <autoscale>true</autoscale>
+        <log_scale>false</log_scale>
+        <minimum>0.0</minimum>
+        <maximum>10.0</maximum>
+        <show_grid>true</show_grid>
+        <title_font>
+          <font name="Default Bold" family="Source Sans Pro" style="BOLD" size="16.0">
+          </font>
+        </title_font>
+        <scale_font>
+          <font name="Default" family="Source Sans Pro" style="REGULAR" size="16.0">
+          </font>
+        </scale_font>
+        <visible>true</visible>
+      </y_axis>
+    </y_axes>
+    <traces>
+      <trace>
+        <name></name>
+        <x_pv>=arrayDivScalar('$(P)$(R)TimeArray',1e-3)</x_pv>
+        <y_pv></y_pv>
+        <err_pv></err_pv>
+        <axis>0</axis>
+        <trace_type>1</trace_type>
+        <color>
+          <color red="0" green="0" blue="255">
+          </color>
+        </color>
+        <line_width>3</line_width>
+        <line_style>0</line_style>
+        <point_type>0</point_type>
+        <point_size>10</point_size>
+        <visible>true</visible>
+      </trace>
+      <trace>
+        <name></name>
+        <x_pv>=arrayDivScalar('$(P)$(R)TimeArray',1e-3)</x_pv>
+        <y_pv></y_pv>
+        <err_pv></err_pv>
+        <axis>0</axis>
+        <trace_type>1</trace_type>
+        <color>
+          <color red="255" green="0" blue="0">
+          </color>
+        </color>
+        <line_width>3</line_width>
+        <line_style>0</line_style>
+        <point_type>0</point_type>
+        <point_size>10</point_size>
+        <visible>true</visible>
+      </trace>
+    </traces>
+  </widget>
+</display>

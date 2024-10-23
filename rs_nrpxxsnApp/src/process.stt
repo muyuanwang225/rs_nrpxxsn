@@ -1,0 +1,89 @@
+/** Sequence to process reading pm proc
+ *  in that order, waiting for each time to complete,
+ *  then reading them again after a short delay
+ */
+
+/* Author: muyuanwang */
+/* Email:  MuYuan.Wang@ess.eu */
+
+/*=================== Program ======================*/
+program sncProcess
+/* %% Macros:
+    P prefix
+    R record root
+*/
+
+/*============= Escape to C Language ===============*/
+%%#include <string.h>
+%%#include <epicsTime.h>
+%%#include <stdlib.h>
+%%#include <stdio.h>
+%%#include <unistd.h>
+
+/*=================== Options ======================*/
+option +r;
+option +s;
+option -c;
+
+/*================== Declarations ==================*/
+short mes;
+assign mes to "{P}{R}mes";
+monitor mes;
+
+short single;
+assign single to "{P}{R}Single.PROC";
+
+short proc;
+assign proc to "{P}{R}Proc.PROC";
+
+double scantime;
+assign scantime to "{P}{R}ScanTime";
+
+double scandelay;
+assign scandelay to "{P}{R}ScanDelay";
+monitor scandelay;
+
+string pmText;
+assign pmText to "{P}{R}Desc";
+monitor pmText;
+
+%%epicsTimeStamp start,end;
+
+ss process {
+    /*========== stop ==========*/
+    state stop
+    {
+        entry
+        {
+            printf("%s process status: Stop\n",pmText);
+            scantime=0.0;
+            pvPut(scantime,SYNC);
+        }
+
+        when (mes==1) {} state start
+    }
+
+    /*========== start ==========*/
+    state start
+    {
+        entry {printf("%s process status: Start\n",pmText);}
+
+        when (mes==0) {} state stop
+
+        when (delay(scandelay)) {
+            // use %{} escape to C
+            %{
+            epicsTimeGetCurrent(&start);
+            }%
+            single=1;
+            pvPut(single,SYNC);
+            proc=1;
+            pvPut(proc,SYNC);
+            %{
+            epicsTimeGetCurrent(&end);
+            pVar->scantime=epicsTimeDiffInSeconds(&end,&start);
+            }%
+            pvPut(scantime,SYNC);
+        } state start
+    }
+}

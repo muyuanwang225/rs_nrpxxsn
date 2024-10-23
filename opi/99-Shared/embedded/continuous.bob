@@ -1,0 +1,439 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<display version="2.0.0">
+  <name>Continuous</name>
+  <height>420</height>
+  <widget type="rectangle" version="2.0.0">
+    <name>Rectangle</name>
+    <x>400</x>
+    <y>170</y>
+    <width>390</width>
+    <height>240</height>
+    <line_width>1</line_width>
+    <line_color>
+      <color red="175" green="175" blue="175">
+      </color>
+    </line_color>
+    <background_color>
+      <color name="GROUP-BACKGROUND" red="200" green="205" blue="201">
+      </color>
+    </background_color>
+    <corner_width>3</corner_width>
+    <corner_height>3</corner_height>
+  </widget>
+  <widget type="rectangle" version="2.0.0">
+    <name>Rectangle</name>
+    <x>10</x>
+    <y>170</y>
+    <width>380</width>
+    <height>240</height>
+    <line_width>1</line_width>
+    <line_color>
+      <color red="175" green="175" blue="175">
+      </color>
+    </line_color>
+    <background_color>
+      <color name="GROUP-BACKGROUND" red="200" green="205" blue="201">
+      </color>
+    </background_color>
+    <corner_width>3</corner_width>
+    <corner_height>3</corner_height>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label</name>
+    <class>HEADER2</class>
+    <text>Aperture Time</text>
+    <x>20</x>
+    <y>170</y>
+    <width>360</width>
+    <height>50</height>
+    <font use_class="true">
+      <font name="Header 2" family="Source Sans Pro" style="BOLD_ITALIC" size="21.0">
+      </font>
+    </font>
+    <horizontal_alignment>1</horizontal_alignment>
+    <vertical_alignment>1</vertical_alignment>
+    <wrap_words>false</wrap_words>
+    <actions>
+    </actions>
+    <border_color>
+      <color red="0" green="128" blue="255">
+      </color>
+    </border_color>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label</name>
+    <class>HEADER2</class>
+    <text>Averaging</text>
+    <x>410</x>
+    <y>170</y>
+    <width>360</width>
+    <height>50</height>
+    <font use_class="true">
+      <font name="Header 2" family="Source Sans Pro" style="BOLD_ITALIC" size="21.0">
+      </font>
+    </font>
+    <horizontal_alignment>1</horizontal_alignment>
+    <vertical_alignment>1</vertical_alignment>
+    <wrap_words>false</wrap_words>
+    <actions>
+    </actions>
+    <border_color>
+      <color red="0" green="128" blue="255">
+      </color>
+    </border_color>
+  </widget>
+  <widget type="rectangle" version="2.0.0">
+    <name>Rectangle</name>
+    <x>10</x>
+    <y>10</y>
+    <width>780</width>
+    <height>150</height>
+    <line_width>1</line_width>
+    <line_color>
+      <color name="GROUP-BORDER" red="150" green="155" blue="151">
+      </color>
+    </line_color>
+    <background_color>
+      <color name="GROUP-BACKGROUND" red="200" green="205" blue="201">
+      </color>
+    </background_color>
+    <corner_width>3</corner_width>
+    <corner_height>3</corner_height>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label</name>
+    <class>HEADER2</class>
+    <text>Power</text>
+    <x>20</x>
+    <y>10</y>
+    <width>760</width>
+    <height>50</height>
+    <font use_class="true">
+      <font name="Header 2" family="Source Sans Pro" style="BOLD_ITALIC" size="21.0">
+      </font>
+    </font>
+    <horizontal_alignment>1</horizontal_alignment>
+    <vertical_alignment>1</vertical_alignment>
+  </widget>
+  <widget type="rectangle" version="2.0.0">
+    <name>BGGrey01-background</name>
+    <x>20</x>
+    <y>220</y>
+    <width>360</width>
+    <height>180</height>
+    <line_width>2</line_width>
+    <line_color>
+      <color name="GROUP-BORDER" red="150" green="155" blue="151">
+      </color>
+    </line_color>
+    <background_color>
+      <color name="BACKGROUND" red="220" green="225" blue="221">
+      </color>
+    </background_color>
+    <corner_width>5</corner_width>
+    <corner_height>5</corner_height>
+  </widget>
+  <widget type="textentry" version="3.0.0">
+    <name>Text Input</name>
+    <pv_name>$(P)$(R)Aper-SP</pv_name>
+    <x>210</x>
+    <y>240</y>
+    <height>30</height>
+    <horizontal_alignment>1</horizontal_alignment>
+    <actions>
+    </actions>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <border_color>
+      <color red="0" green="128" blue="255">
+      </color>
+    </border_color>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>Text Update</name>
+    <pv_name>$(P)$(R)Aper-RB</pv_name>
+    <x>210</x>
+    <y>290</y>
+    <height>30</height>
+    <horizontal_alignment>1</horizontal_alignment>
+    <vertical_alignment>1</vertical_alignment>
+    <wrap_words>false</wrap_words>
+    <actions>
+    </actions>
+    <border_width>2</border_width>
+    <border_color>
+      <color name="GRAY-BORDER" red="121" green="121" blue="121">
+      </color>
+    </border_color>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label</name>
+    <class>CAPTION</class>
+    <text>Set Value:</text>
+    <x>80</x>
+    <y>240</y>
+    <height>30</height>
+    <foreground_color use_class="true">
+      <color name="Text" red="25" green="25" blue="25">
+      </color>
+    </foreground_color>
+    <horizontal_alignment use_class="true">2</horizontal_alignment>
+    <vertical_alignment use_class="true">1</vertical_alignment>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label</name>
+    <class>CAPTION</class>
+    <text>Readback:</text>
+    <x>80</x>
+    <y>290</y>
+    <height>30</height>
+    <foreground_color use_class="true">
+      <color name="Text" red="25" green="25" blue="25">
+      </color>
+    </foreground_color>
+    <horizontal_alignment use_class="true">2</horizontal_alignment>
+    <vertical_alignment use_class="true">1</vertical_alignment>
+  </widget>
+  <widget type="rectangle" version="2.0.0">
+    <name>BGGrey01-background</name>
+    <x>410</x>
+    <y>220</y>
+    <width>370</width>
+    <height>180</height>
+    <line_width>2</line_width>
+    <line_color>
+      <color name="GROUP-BORDER" red="150" green="155" blue="151">
+      </color>
+    </line_color>
+    <background_color>
+      <color name="BACKGROUND" red="220" green="225" blue="221">
+      </color>
+    </background_color>
+    <corner_width>5</corner_width>
+    <corner_height>5</corner_height>
+  </widget>
+  <widget type="textentry" version="3.0.0">
+    <name>Text Input</name>
+    <pv_name>$(P)$(R)AvgCount-SP</pv_name>
+    <x>550</x>
+    <y>340</y>
+    <height>30</height>
+    <horizontal_alignment>1</horizontal_alignment>
+    <actions>
+    </actions>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <border_color>
+      <color red="0" green="128" blue="255">
+      </color>
+    </border_color>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>Text Update</name>
+    <pv_name>$(P)$(R)AvgCount-RB</pv_name>
+    <x>660</x>
+    <y>340</y>
+    <height>30</height>
+    <horizontal_alignment>1</horizontal_alignment>
+    <vertical_alignment>1</vertical_alignment>
+    <wrap_words>false</wrap_words>
+    <actions>
+    </actions>
+    <border_width>2</border_width>
+    <border_color>
+      <color name="GRAY-BORDER" red="121" green="121" blue="121">
+      </color>
+    </border_color>
+  </widget>
+  <widget type="slide_button" version="2.0.0">
+    <name>Slide Button</name>
+    <pv_name>$(P)$(R)AvgEn-SP</pv_name>
+    <bit>-1</bit>
+    <label>Enable</label>
+    <x>550</x>
+    <y>290</y>
+    <width>120</width>
+    <on_color>
+      <color red="0" green="255" blue="0">
+      </color>
+    </on_color>
+    <actions>
+    </actions>
+    <rules>
+      <rule name="Label" prop_id="label" out_exp="false">
+        <exp bool_exp="pv0 == 0">
+          <value>Disable</value>
+        </exp>
+        <pv_name>$(P)$(R)AvgEn-SP</pv_name>
+      </rule>
+    </rules>
+    <confirm_message>Are you sure you want to do this?</confirm_message>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label</name>
+    <class>CAPTION</class>
+    <text>Avg Counts:</text>
+    <x>430</x>
+    <y>340</y>
+    <height>30</height>
+    <foreground_color use_class="true">
+      <color name="Text" red="25" green="25" blue="25">
+      </color>
+    </foreground_color>
+    <horizontal_alignment use_class="true">2</horizontal_alignment>
+    <vertical_alignment use_class="true">1</vertical_alignment>
+  </widget>
+  <widget type="led" version="2.0.0">
+    <name>LED</name>
+    <pv_name>$(P)$(R)AvgEn-RB</pv_name>
+    <x>700</x>
+    <y>295</y>
+  </widget>
+  <widget type="slide_button" version="2.0.0">
+    <name>Slide Button</name>
+    <pv_name>$(P)$(R)AvgCountMode-SP</pv_name>
+    <label>Fixed</label>
+    <x>550</x>
+    <y>240</y>
+    <width>120</width>
+    <rules>
+      <rule name="Label" prop_id="label" out_exp="false">
+        <exp bool_exp="pv0 == 1">
+          <value>Auto</value>
+        </exp>
+        <pv_name>$(P)$(R)AvgCountMode-SP</pv_name>
+      </rule>
+    </rules>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label</name>
+    <class>CAPTION</class>
+    <text>Mode:</text>
+    <x>430</x>
+    <y>240</y>
+    <height>30</height>
+    <foreground_color use_class="true">
+      <color name="Text" red="25" green="25" blue="25">
+      </color>
+    </foreground_color>
+    <horizontal_alignment use_class="true">2</horizontal_alignment>
+    <vertical_alignment use_class="true">1</vertical_alignment>
+  </widget>
+  <widget type="led" version="2.0.0">
+    <name>LED</name>
+    <pv_name>$(P)$(R)AvgCountMode-RB</pv_name>
+    <x>700</x>
+    <y>245</y>
+  </widget>
+  <widget type="slide_button" version="2.0.0">
+    <name>Slide Button</name>
+    <pv_name>$(P)$(R)FastMes-SP</pv_name>
+    <bit>-1</bit>
+    <label></label>
+    <x>210</x>
+    <y>340</y>
+    <on_color>
+      <color red="0" green="255" blue="0">
+      </color>
+    </on_color>
+    <actions>
+    </actions>
+    <confirm_message>Are you sure you want to do this?</confirm_message>
+  </widget>
+  <widget type="led" version="2.0.0">
+    <name>LED</name>
+    <pv_name>$(P)$(R)FastMes-RB</pv_name>
+    <x>290</x>
+    <y>345</y>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label</name>
+    <class>CAPTION</class>
+    <text>Enable Avg:</text>
+    <x>430</x>
+    <y>290</y>
+    <height>30</height>
+    <foreground_color use_class="true">
+      <color name="Text" red="25" green="25" blue="25">
+      </color>
+    </foreground_color>
+    <horizontal_alignment use_class="true">2</horizontal_alignment>
+    <vertical_alignment use_class="true">1</vertical_alignment>
+  </widget>
+  <widget type="rectangle" version="2.0.0">
+    <name>BGGrey01-background</name>
+    <x>20</x>
+    <y>60</y>
+    <width>760</width>
+    <height>90</height>
+    <line_width>2</line_width>
+    <line_color>
+      <color name="GROUP-BORDER" red="150" green="155" blue="151">
+      </color>
+    </line_color>
+    <background_color>
+      <color name="BACKGROUND" red="220" green="225" blue="221">
+      </color>
+    </background_color>
+    <corner_width>5</corner_width>
+    <corner_height>5</corner_height>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>Text Update</name>
+    <pv_name>$(P)$(R)ScalarPowerW</pv_name>
+    <x>40</x>
+    <y>80</y>
+    <width>350</width>
+    <height>50</height>
+    <font>
+      <font family="Source Sans Pro Semibold" style="REGULAR" size="32.0">
+      </font>
+    </font>
+    <format>2</format>
+    <horizontal_alignment>1</horizontal_alignment>
+    <vertical_alignment>1</vertical_alignment>
+    <wrap_words>false</wrap_words>
+    <actions>
+    </actions>
+    <border_width>2</border_width>
+    <border_color>
+      <color name="GRAY-BORDER" red="121" green="121" blue="121">
+      </color>
+    </border_color>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>Text Update</name>
+    <pv_name>$(P)$(R)ScalarPowerDBM</pv_name>
+    <x>410</x>
+    <y>80</y>
+    <width>350</width>
+    <height>50</height>
+    <font>
+      <font family="Source Sans Pro Semibold" style="REGULAR" size="32.0">
+      </font>
+    </font>
+    <horizontal_alignment>1</horizontal_alignment>
+    <vertical_alignment>1</vertical_alignment>
+    <wrap_words>false</wrap_words>
+    <actions>
+    </actions>
+    <border_width>2</border_width>
+    <border_color>
+      <color name="GRAY-BORDER" red="121" green="121" blue="121">
+      </color>
+    </border_color>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label</name>
+    <class>CAPTION</class>
+    <text>Fast Measurement:</text>
+    <x>40</x>
+    <y>340</y>
+    <width>140</width>
+    <height>30</height>
+    <foreground_color use_class="true">
+      <color name="Text" red="25" green="25" blue="25">
+      </color>
+    </foreground_color>
+    <horizontal_alignment use_class="true">2</horizontal_alignment>
+    <vertical_alignment use_class="true">1</vertical_alignment>
+  </widget>
+</display>

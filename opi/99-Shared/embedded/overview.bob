@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<display version="2.0.0">
+  <name>Overview</name>
+  <width>1230</width>
+  <height>910</height>
+  <widget type="embedded" version="2.0.0">
+    <name>Linking Container Channel 1</name>
+    <macros>
+      <R>EMR-RFPM-010:</R>
+    </macros>
+    <file>overviewplot.bob</file>
+    <x>10</x>
+    <y>10</y>
+    <width>600</width>
+    <height>440</height>
+    <resize>2</resize>
+  </widget>
+  <widget type="embedded" version="2.0.0">
+    <name>Linking Container Channel 2</name>
+    <macros>
+      <R>EMR-RFPM-020:</R>
+    </macros>
+    <file>overviewplot.bob</file>
+    <x>620</x>
+    <y>10</y>
+    <width>600</width>
+    <height>440</height>
+    <resize>2</resize>
+  </widget>
+  <widget type="embedded" version="2.0.0">
+    <name>Linking Container Channel 3</name>
+    <macros>
+      <R>EMR-RFPM-030:</R>
+    </macros>
+    <file>overviewplot.bob</file>
+    <x>10</x>
+    <y>460</y>
+    <width>600</width>
+    <height>440</height>
+    <resize>2</resize>
+  </widget>
+  <widget type="embedded" version="2.0.0">
+    <name>Linking Container Channel 4</name>
+    <macros>
+      <R>EMR-RFPM-040:</R>
+    </macros>
+    <file>overviewplot.bob</file>
+    <x>620</x>
+    <y>460</y>
+    <width>600</width>
+    <height>440</height>
+    <resize>2</resize>
+  </widget>
+</display>

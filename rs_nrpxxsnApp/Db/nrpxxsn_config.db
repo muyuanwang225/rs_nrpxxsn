@@ -1,0 +1,417 @@
+#
+#  Author  : muyuanwang
+#  Email   : muyuan.wang@ess.eu
+#  Project : nrpxxsn configuration
+#
+##### Macros
+# P: prefix
+# R: record root
+#
+
+# Frequency
+record(ao, "$(P)$(R)Freq-SP") {
+    field(DESC, "frequency setpoint")
+    field(OMSL, "supervisory")
+    field(DTYP, "stream")
+    field(OUT,  "@nrpxxsn.proto write_float(FREQ) $(PORT)")
+    field(VAL,  "704.42")
+    field(AOFF, "0")
+    field(ASLO, "1E-6")
+    field(EGU,  "MHz")
+    field(PREC, "2")
+    field(DRVL, "0")
+    field(DRVH, "110E3")
+    field(FLNK, "$(P)$(R)Freq-RB")
+
+    info(autosaveFields, "VAL")
+}
+
+record(ai, "$(P)$(R)Freq-RB") {
+    field(DESC, "frequency readback")
+    field(DTYP, "stream")
+    field(INP,  "@nrpxxsn.proto read_float(FREQ) $(PORT)")
+    field(ASLO, "1E-6")
+    field(AOFF, "0")
+    field(SMOO, "0")
+    field(EGU,  "MHz")
+    field(PREC, "2")
+    field(LOPR, "0")
+    field(HOPR, "110E3")
+}
+
+record(bo, "$(P)$(R)ColdCableEn") {
+    field(DESC, "cold cable enabled")
+    field(VAL,  "0")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+    field(FLNK, "$(P)$(R)Offset-SP")
+
+    info(autosaveFields, "VAL")
+}
+
+record(ao, "$(P)$(R)ColdCableAtt") {
+    field(DESC, "cold cable attenuation")
+    field(OMSL, "supervisory")
+    field(VAL,  "0.5")
+    field(PREC, "3")
+    field(EGU,  "dB")
+    field(FLNK, "$(P)$(R)Offset-SP")
+
+    info(autosaveFields, "VAL")
+}
+
+record(ao, "$(P)$(R)WarmOffset") {
+    field(DESC, "warm offset")
+    field(VAL,  "0")
+    field(PREC, "3")
+    field(EGU,  "dB")
+    field(FLNK, "$(P)$(R)Offset-SP")
+
+    info(autosaveFields, "VAL")
+}
+
+# Offset
+record(calcout, "$(P)$(R)Offset-SP") {
+    field(DESC, "offset value setpoint")
+    field(DTYP, "stream")
+    field(OUT,  "@nrpxxsn.proto write_float(CORR:OFFS) $(PORT)")
+    field(CALC, "C=0?A:(A+B)")
+    field(INPA, "$(P)$(R)WarmOffset")
+    field(INPB, "$(P)$(R)ColdCableAtt")
+    field(INPC, "$(P)$(R)ColdCableEn")
+    field(PREC, "3")
+    field(EGU,  "dB")
+    field(FLNK, "$(P)$(R)Offset-RB")
+}
+
+record(ai, "$(P)$(R)Offset-RB") {
+    field(DESC, "offset value readback")
+    field(DTYP, "stream")
+    field(INP,  "@nrpxxsn.proto read_float(CORR:OFFS) $(PORT)")
+    field(PREC, "3")
+    field(EGU,  "dB")
+    field(FLNK, "$(P)$(R)TrigLvl-RB")
+}
+
+record(bo, "$(P)$(R)OffsetEn-SP") {
+    field(DESC, "offset state setpoint")
+    field(DTYP, "stream")
+    field(OUT,  "@nrpxxsn.proto write_string(CORR:OFFS:STAT) $(PORT)")
+    field(VAL,  "1")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+    field(FLNK, "$(P)$(R)OffsetEn-RB")
+
+    info(autosaveFields, "VAL")
+}
+
+record(bi, "$(P)$(R)OffsetEn-RB") {
+    field(DESC, "offset state readback")
+    field(DTYP, "stream")
+    field(INP,  "@nrpxxsn.proto read_int(CORR:OFFS:STAT) $(PORT)")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+    field(FLNK, "$(P)$(R)TrigLvl-RB")
+}
+
+# Continuous Mode
+record(bo, "$(P)$(R)AvgEn-SP") {
+    field(DESC, "averaging state setoint")
+    field(DTYP, "stream")
+    field(OUT,  "@nrpxxsn.proto write_string(AVER) $(PORT)")
+    field(VAL,  "1")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+    field(FLNK, "$(P)$(R)AvgEn-RB")
+
+    info(autosaveFields, "VAL")
+}
+
+record(bi, "$(P)$(R)AvgEn-RB") {
+    field(DESC, "averaging state readback")
+    field(DTYP, "stream")
+    field(INP,  "@nrpxxsn.proto read_int(AVER) $(PORT)")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+
+# average count (*only effective if "AVER ON")
+record(ao, "$(P)$(R)AvgCount-SP") {
+    field(DESC, "averaging count setpoint")
+    field(DTYP, "stream")
+    field(OUT,  "@nrpxxsn.proto write_int(AVER:COUN) $(PORT)")
+    field(VAL,  "4")
+    field(DRVL, "1")
+    field(DRVH, "65536")
+    field(FLNK, "$(P)$(R)AvgCount-RB")
+
+    info(autosaveFields, "VAL")
+}
+
+record(ai, "$(P)$(R)AvgCount-RB") {
+    field(DESC, "averaging count readback")
+    field(DTYP, "stream")
+    field(INP,  "@nrpxxsn.proto read_int(AVER:COUN) $(PORT)")
+}
+
+# mode for determining the average count
+#     "OFF": fixed filter
+#     "ON":  auto averaging
+record(bo, "$(P)$(R)AvgCountMode-SP") {
+    field(DESC, "averaging count mode setpoint")
+    field(DTYP, "stream")
+    field(OUT,  "@nrpxxsn.proto write_string(AVER:COUN:AUTO) $(PORT)")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+    field(VAL,  "0")
+    field(FLNK, "$(P)$(R)AvgCountMode-RB")
+
+    info(autosaveFields, "VAL")
+}
+
+record(bi, "$(P)$(R)AvgCountMode-RB") {
+    field(DESC, "averaging count mode readback")
+    field(DTYP, "stream")
+    field(INP,  "@nrpxxsn.proto write_string(AVER:COUN:AUTO) $(PORT)")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+
+# fast unchopped continuous average measurement
+#     duration of the sampling window = aperture time (average count is enforced to 1)
+record(bo, "$(P)$(R)FastMes-SP") {
+    field(DESC, "fast measurement setpoint")
+    field(DTYP, "stream")
+    field(OUT,  "@nrpxxsn.proto write_string(FAST) $(PORT)")
+    field(VAL,  "0")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+    field(FLNK, "$(P)$(R)FastMes-RB")
+
+    info(autosaveFields, "VAL")
+}
+
+record(bi, "$(P)$(R)FastMes-RB") {
+    field(DESC, "fast measurement readback")
+    field(DTYP, "stream")
+    field(INP,  "@nrpxxsn.proto read_int(FAST) $(PORT)")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+
+record(ao, "$(P)$(R)Aper-SP") {
+    field(DESC, "aperture time setpoint")
+    field(OMSL, "supervisory")
+    field(DTYP, "stream")
+    field(OUT,  "@nrpxxsn.proto write_float(APER) $(PORT)")
+    field(VAL,  "20")
+    field(AOFF, "0")
+    field(ASLO, "1000")
+    field(EGU,  "ms")
+    field(PREC, "1")
+    field(DRVL, "0.008")
+    field(DRVH, "2000")
+    field(FLNK, "$(P)$(R)Aper-RB")
+
+    info(autosaveFields, "VAL")
+}
+
+record(ai, "$(P)$(R)Aper-RB") {
+    field(DESC, "aperture time readback")
+    field(DTYP, "stream")
+    field(INP,  "@nrpxxsn.proto read_float(APER) $(PORT)")
+    field(ASLO, "1000")
+    field(AOFF, "0")
+    field(SMOO, "0")
+    field(EGU,  "ms")
+    field(PREC, "1")
+    field(LOPR, "0.008")
+    field(HOPR, "2000")
+}
+
+# Trace Mode
+record(ao, "$(P)$(R)TraceTime-SP") {
+    field(DESC, "trace time setpoint")
+    field(OMSL, "supervisory")
+    field(DTYP, "stream")
+    field(OUT,  "@nrpxxsn.proto write_float(TRAC:TIME) $(PORT)")
+    field(VAL,  "4")
+    field(AOFF, "0")
+    field(ASLO, "1000")
+    field(EGU,  "ms")
+    field(PREC, "1")
+    field(DRVL, "0.01")
+    field(DRVH, "3000")
+    field(FLNK, "$(P)$(R)TraceTime-RB")
+
+    info(autosaveFields, "VAL")
+}
+
+record(ai, "$(P)$(R)TraceTime-RB") {
+    field(DESC, "trace time readback")
+    field(DTYP, "stream")
+    field(INP,  "@nrpxxsn.proto read_float(TRAC:TIME) $(PORT)")
+    field(ASLO, "1000")
+    field(AOFF, "0")
+    field(SMOO, "0")
+    field(EGU,  "ms")
+    field(PREC, "1")
+    field(LOPR, "0.01")
+    field(HOPR, "3000")
+}
+
+record(ao, "$(P)$(R)TraceOffset-SP") {
+    field(DESC, "trace offset setpoint")
+    field(OMSL, "supervisory")
+    field(DTYP, "stream")
+    field(OUT,  "@nrpxxsn.proto write_float(TRAC:OFFS:TIME) $(PORT)")
+    field(VAL,  "-0.2")
+    field(AOFF, "0")
+    field(ASLO, "1000")
+    field(EGU,  "ms")
+    field(PREC, "1")
+    field(DRVL, "-10")
+    field(DRVH, "10")
+    field(FLNK, "$(P)$(R)TraceOffset-RB")
+
+    info(autosaveFields, "VAL")
+}
+
+record(ai, "$(P)$(R)TraceOffset-RB") {
+    field(DESC, "trace offset readback")
+    field(DTYP, "stream")
+    field(INP,  "@nrpxxsn.proto read_float(TRAC:OFFS:TIME) $(PORT)")
+    field(ASLO, "1000")
+    field(AOFF, "0")
+    field(SMOO, "0")
+    field(EGU,  "ms")
+    field(PREC, "1")
+    field(LOPR, "-10")
+    field(HOPR, "10")
+}
+
+record(ao, "$(P)$(R)TracePoints-SP") {
+    field(DESC, "trace points setpoint")
+    field(DTYP, "stream")
+    field(OUT,  "@nrpxxsn.proto write_int(TRAC:POIN) $(PORT)")
+    field(VAL,  "1000")
+    field(DRVL, "1")
+    field(DRVH, "5000")
+    field(FLNK, "$(P)$(R)TracePoints-RB")
+
+    info(autosaveFields, "VAL")
+}
+
+record(ai, "$(P)$(R)TracePoints-RB") {
+    field(DESC, "trace points readback")
+    field(DTYP, "stream")
+    field(INP,  "@nrpxxsn.proto read_int(TRAC:POIN) $(PORT)")
+}
+
+record(bo, "$(P)$(R)TraceAveCountEn-SP") {
+    field(DESC, "trace averaging state setpoint")  # default: OFF
+    field(DTYP, "stream")
+    field(OUT,  "@nrpxxsn.proto write_string(TRAC:AVER:STAT) $(PORT)")
+    field(VAL,  "0")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+    field(FLNK, "$(P)$(R)TraceAveCountEn-RB")
+
+    info(autosaveFields, "VAL")
+}
+
+record(bi, "$(P)$(R)TraceAveCountEn-RB") {
+    field(DESC, "trace averaging state readback")
+    field(DTYP, "stream")
+    field(INP,  "@nrpxxsn.proto read_int(TRAC:AVER:STAT) $(PORT)")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+
+record(ao, "$(P)$(R)TraceAveCount-SP") {
+    field(DESC, "trace averaging count setpoint")
+    field(DTYP, "stream")
+    field(OUT,  "@nrpxxsn.proto write_int(TRAC:AVER:COUN) $(PORT)")
+    field(VAL,  "4")
+    field(DRVL, "1")
+    field(DRVH, "65536")
+    field(FLNK, "$(P)$(R)TraceAveCount-RB")
+
+    info(autosaveFields, "VAL")
+}
+
+record(ai, "$(P)$(R)TraceAveCount-RB") {
+    field(DESC, "trace averaging count readback")
+    field(DTYP, "stream")
+    field(INP,  "@nrpxxsn.proto read_int(TRAC:AVER:COUN) $(PORT)")
+}
+
+# Trigger
+record(mbbo, "$(P)$(R)TrigSrc-SP") {
+    field(DESC, "trigger source setpoint")
+    field(OMSL, "supervisory")
+    field(DTYP, "stream")
+    field(OUT,  "@nrpxxsn.proto write_string(TRIG:SOUR) $(PORT)")
+    field(VAL,  "2")
+    field(ZRVL, "0")
+    field(ZRST, "IMMediate")
+    field(ONVL, "1")
+    field(ONST, "INTernal")
+    field(TWVL, "2")
+    field(TWST, "EXTernal2")
+    field(FLNK, "$(P)$(R)TrigSrc-RB")
+
+    info(autosaveFields, "VAL")
+}
+
+record(stringin, "$(P)$(R)TrigSrc-RB") {
+    field(DESC, "trigger source readback")
+    field(DTYP, "stream")
+    field(INP,  "@nrpxxsn.proto read_string(TRIG:SOUR) $(PORT)")
+}
+
+record(ao, "$(P)$(R)TrigLvl-SP") {
+    field(DESC, "trigger level setpoint")
+    field(OMSL, "supervisory")
+    field(DTYP, "stream")
+    field(OUT,  "@nrpxxsn.proto write_float(TRIG:LEV) $(PORT)")
+    field(VAL,  "1E-6")
+    field(EGU,  "w")
+    field(PREC, "1")
+    field(DRVL, "1E-7")
+    field(DRVH, "200E-3")
+    field(FLNK, "$(P)$(R)TrigLvl-RB")
+
+    info(autosaveFields, "VAL")
+}
+
+record(ai, "$(P)$(R)TrigLvl-RB") {
+    field(DESC, "trigger level readback")
+    field(DTYP, "stream")
+    field(INP,  "@nrpxxsn.proto read_float(TRIG:LEV) $(PORT)")
+    field(EGU,  "w")
+    field(PREC, "1")
+    field(LOPR, "1E-7")
+    field(HOPR, "200E-3")
+}
+
+record(mbbo, "$(P)$(R)TrigSlope-SP") {
+    field(DESC, "trigger slope setpoint")
+    field(OMSL, "supervisory")
+    field(DTYP, "stream")
+    field(OUT,  "@nrpxxsn.proto write_string(TRIG:SLOP) $(PORT)")
+    field(VAL,  "0")
+    field(ZRVL, "0")
+    field(ZRST, "POS")
+    field(ONVL, "1")
+    field(ONST, "NEG")
+    field(FLNK, "$(P)$(R)TrigSlope-RB")
+
+    info(autosaveFields, "VAL")
+}
+
+record(stringin, "$(P)$(R)TrigSlope-RB") {
+    field(DESC, "trigger slope readback")
+    field(DTYP, "stream")
+    field(INP,  "@nrpxxsn.proto read_string(TRIG:SLOP) $(PORT)")
+}

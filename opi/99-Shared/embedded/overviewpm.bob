@@ -1,0 +1,638 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--Saved on 2023-11-20 14:31:34 by muyuanwang-->
+<display version="2.0.0">
+  <name>TS2 Power Sensor - overview PM$(PMN)</name>
+  <width>1230</width>
+  <height>890</height>
+  <widget type="rectangle" version="2.0.0">
+    <name>BGGrey01-background</name>
+    <x>10</x>
+    <y>50</y>
+    <width>390</width>
+    <height>830</height>
+    <line_width>1</line_width>
+    <line_color>
+      <color red="175" green="175" blue="175">
+      </color>
+    </line_color>
+    <background_color>
+      <color name="Background" red="220" green="225" blue="221">
+      </color>
+    </background_color>
+    <corner_width>3</corner_width>
+    <corner_height>3</corner_height>
+  </widget>
+  <widget type="navtabs" version="2.0.0">
+    <name>Navigation Tabs</name>
+    <tabs>
+      <tab>
+        <name>Continuous</name>
+        <file>continuous.bob</file>
+        <macros>
+        </macros>
+        <group_name></group_name>
+      </tab>
+      <tab>
+        <name>Trace</name>
+        <file>trace.bob</file>
+        <macros>
+        </macros>
+        <group_name></group_name>
+      </tab>
+    </tabs>
+    <x>410</x>
+    <y>10</y>
+    <width>810</width>
+    <height>870</height>
+    <direction>0</direction>
+    <tab_width>120</tab_width>
+    <tab_height>40</tab_height>
+    <tab_spacing>5</tab_spacing>
+    <font>
+      <font family="Source Sans Pro Semibold" style="REGULAR" size="18.0">
+      </font>
+    </font>
+    <active_tab>1</active_tab>
+    <rules>
+      <rule name="Tab" prop_id="active_tab" out_exp="false">
+        <exp bool_exp="pv0 == 0">
+          <value>0</value>
+        </exp>
+        <pv_name>$(P)$(R)mesMode-RB</pv_name>
+      </rule>
+    </rules>
+  </widget>
+  <widget type="rectangle" version="2.0.0">
+    <name>BGGrey01-background</name>
+    <x>20</x>
+    <y>200</y>
+    <width>370</width>
+    <height>390</height>
+    <line_width>1</line_width>
+    <line_color>
+      <color name="GROUP-BORDER" red="150" green="155" blue="151">
+      </color>
+    </line_color>
+    <background_color>
+      <color name="GROUP-BACKGROUND" red="200" green="205" blue="201">
+      </color>
+    </background_color>
+    <corner_width>3</corner_width>
+    <corner_height>3</corner_height>
+  </widget>
+  <widget type="action_button" version="3.0.0">
+    <name>Action Button</name>
+    <actions>
+      <action type="write_pv">
+        <pv_name>$(pv_name)</pv_name>
+        <value>1</value>
+        <description>Reset</description>
+      </action>
+    </actions>
+    <pv_name>$(P)$(R)Reset</pv_name>
+    <x>30</x>
+    <y>820</y>
+    <width>350</width>
+    <height>50</height>
+    <font>
+      <font name="Header 2" family="Source Sans Pro" style="BOLD_ITALIC" size="21.0">
+      </font>
+    </font>
+    <background_color>
+      <color name="BLUE-BORDER" red="47" green="135" blue="148">
+      </color>
+    </background_color>
+    <tooltip>$(actions)</tooltip>
+  </widget>
+  <widget type="rectangle" version="2.0.0">
+    <name>BGGrey01-background</name>
+    <x>30</x>
+    <y>250</y>
+    <width>350</width>
+    <height>330</height>
+    <line_width>2</line_width>
+    <line_color>
+      <color name="GROUP-BORDER" red="150" green="155" blue="151">
+      </color>
+    </line_color>
+    <background_color>
+      <color name="BACKGROUND" red="220" green="225" blue="221">
+      </color>
+    </background_color>
+    <corner_width>5</corner_width>
+    <corner_height>5</corner_height>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label</name>
+    <text>Set Value</text>
+    <x>150</x>
+    <y>260</y>
+    <height>30</height>
+    <horizontal_alignment>1</horizontal_alignment>
+    <vertical_alignment>1</vertical_alignment>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label</name>
+    <text>Readback</text>
+    <x>260</x>
+    <y>260</y>
+    <height>30</height>
+    <horizontal_alignment>1</horizontal_alignment>
+    <vertical_alignment>1</vertical_alignment>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>Text Update</name>
+    <pv_name>$(P)$(R)Freq-RB</pv_name>
+    <x>260</x>
+    <y>340</y>
+    <height>30</height>
+    <horizontal_alignment>1</horizontal_alignment>
+    <vertical_alignment>1</vertical_alignment>
+    <border_width>2</border_width>
+    <border_color>
+      <color name="GRAY-BORDER" red="121" green="121" blue="121">
+      </color>
+    </border_color>
+  </widget>
+  <widget type="textentry" version="3.0.0">
+    <name>Text Entry</name>
+    <pv_name>$(P)$(R)Freq-SP</pv_name>
+    <x>150</x>
+    <y>340</y>
+    <height>30</height>
+    <horizontal_alignment>1</horizontal_alignment>
+    <wrap_words>true</wrap_words>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label</name>
+    <class>HEADER2</class>
+    <text>Common Settings</text>
+    <x>30</x>
+    <y>200</y>
+    <width>350</width>
+    <height>50</height>
+    <font use_class="true">
+      <font name="Header 2" family="Source Sans Pro" style="BOLD_ITALIC" size="21.0">
+      </font>
+    </font>
+    <horizontal_alignment>1</horizontal_alignment>
+    <vertical_alignment>1</vertical_alignment>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label</name>
+    <class>CAPTION</class>
+    <text>Att (warm):</text>
+    <x>40</x>
+    <y>460</y>
+    <height>30</height>
+    <foreground_color use_class="true">
+      <color name="Text" red="25" green="25" blue="25">
+      </color>
+    </foreground_color>
+    <horizontal_alignment use_class="true">2</horizontal_alignment>
+    <vertical_alignment use_class="true">1</vertical_alignment>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>Text Entry</name>
+    <pv_name>$(P)$(R)Offset-SP</pv_name>
+    <x>150</x>
+    <y>420</y>
+    <height>30</height>
+    <horizontal_alignment>1</horizontal_alignment>
+    <vertical_alignment>1</vertical_alignment>
+    <wrap_words>false</wrap_words>
+    <actions>
+    </actions>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <border_width>2</border_width>
+    <border_color>
+      <color name="GRAY-BORDER" red="121" green="121" blue="121">
+      </color>
+    </border_color>
+  </widget>
+  <widget type="slide_button" version="2.0.0">
+    <name>Slide Button</name>
+    <pv_name>$(P)$(R)OffsetEn-SP</pv_name>
+    <bit>-1</bit>
+    <label></label>
+    <x>150</x>
+    <y>380</y>
+    <on_color>
+      <color name="On" red="70" green="255" blue="70">
+      </color>
+    </on_color>
+    <actions>
+    </actions>
+    <confirm_message>Are you sure you want to do this?</confirm_message>
+  </widget>
+  <widget type="textentry" version="3.0.0">
+    <name>Text Entry</name>
+    <pv_name>$(P)$(R)WarmOffset</pv_name>
+    <x>150</x>
+    <y>460</y>
+    <height>30</height>
+    <horizontal_alignment>1</horizontal_alignment>
+  </widget>
+  <widget type="led" version="2.0.0">
+    <name>LED</name>
+    <pv_name>$(P)$(R)OffsetEn-RB</pv_name>
+    <x>260</x>
+    <y>385</y>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>Text Entry</name>
+    <pv_name>$(P)$(R)Offset-RB</pv_name>
+    <x>260</x>
+    <y>420</y>
+    <height>30</height>
+    <horizontal_alignment>1</horizontal_alignment>
+    <vertical_alignment>1</vertical_alignment>
+    <wrap_words>false</wrap_words>
+    <actions>
+    </actions>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <border_width>2</border_width>
+    <border_color>
+      <color name="GRAY-BORDER" red="121" green="121" blue="121">
+      </color>
+    </border_color>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label</name>
+    <class>CAPTION</class>
+    <text>Att (cold):</text>
+    <x>40</x>
+    <y>540</y>
+    <height>30</height>
+    <foreground_color use_class="true">
+      <color name="Text" red="25" green="25" blue="25">
+      </color>
+    </foreground_color>
+    <horizontal_alignment use_class="true">2</horizontal_alignment>
+    <vertical_alignment use_class="true">1</vertical_alignment>
+  </widget>
+  <widget type="textentry" version="3.0.0">
+    <name>Text Entry</name>
+    <pv_name>$(P)$(R)ColdCableAtt</pv_name>
+    <x>150</x>
+    <y>540</y>
+    <height>30</height>
+    <horizontal_alignment>1</horizontal_alignment>
+  </widget>
+  <widget type="slide_button" version="2.0.0">
+    <name>Slide Button</name>
+    <pv_name>$(P)$(R)ColdCableEn</pv_name>
+    <bit>-1</bit>
+    <label></label>
+    <x>150</x>
+    <y>500</y>
+    <on_color>
+      <color name="On" red="70" green="255" blue="70">
+      </color>
+    </on_color>
+    <actions>
+    </actions>
+    <confirm_message>Are you sure you want to do this?</confirm_message>
+  </widget>
+  <widget type="rectangle" version="2.0.0">
+    <name>BGGrey01-background</name>
+    <x>20</x>
+    <y>60</y>
+    <width>370</width>
+    <height>120</height>
+    <line_width>1</line_width>
+    <line_color>
+      <color name="GROUP-BORDER" red="150" green="155" blue="151">
+      </color>
+    </line_color>
+    <background_color>
+      <color name="GROUP-BACKGROUND" red="200" green="205" blue="201">
+      </color>
+    </background_color>
+    <corner_width>3</corner_width>
+    <corner_height>3</corner_height>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label</name>
+    <class>HEADER2</class>
+    <text>Measurement</text>
+    <x>30</x>
+    <y>60</y>
+    <width>350</width>
+    <height>50</height>
+    <font use_class="true">
+      <font name="Header 2" family="Source Sans Pro" style="BOLD_ITALIC" size="21.0">
+      </font>
+    </font>
+    <horizontal_alignment>1</horizontal_alignment>
+    <vertical_alignment>1</vertical_alignment>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label</name>
+    <class>CAPTION</class>
+    <text>Frequency:</text>
+    <x>40</x>
+    <y>340</y>
+    <height>30</height>
+    <foreground_color use_class="true">
+      <color name="Text" red="25" green="25" blue="25">
+      </color>
+    </foreground_color>
+    <horizontal_alignment use_class="true">2</horizontal_alignment>
+    <vertical_alignment use_class="true">1</vertical_alignment>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label</name>
+    <class>CAPTION</class>
+    <text>Offset:</text>
+    <x>40</x>
+    <y>420</y>
+    <height>30</height>
+    <foreground_color use_class="true">
+      <color name="Text" red="25" green="25" blue="25">
+      </color>
+    </foreground_color>
+    <horizontal_alignment use_class="true">2</horizontal_alignment>
+    <vertical_alignment use_class="true">1</vertical_alignment>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label</name>
+    <class>CAPTION</class>
+    <text>Enable Offset:</text>
+    <x>40</x>
+    <y>380</y>
+    <height>30</height>
+    <foreground_color use_class="true">
+      <color name="Text" red="25" green="25" blue="25">
+      </color>
+    </foreground_color>
+    <horizontal_alignment use_class="true">2</horizontal_alignment>
+    <vertical_alignment use_class="true">1</vertical_alignment>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label</name>
+    <class>CAPTION</class>
+    <text>Enable Cold:</text>
+    <x>40</x>
+    <y>500</y>
+    <height>30</height>
+    <foreground_color use_class="true">
+      <color name="Text" red="25" green="25" blue="25">
+      </color>
+    </foreground_color>
+    <horizontal_alignment use_class="true">2</horizontal_alignment>
+    <vertical_alignment use_class="true">1</vertical_alignment>
+  </widget>
+  <widget type="rectangle" version="2.0.0">
+    <name>BGGrey01-background</name>
+    <x>20</x>
+    <y>610</y>
+    <width>370</width>
+    <height>190</height>
+    <line_width>1</line_width>
+    <line_color>
+      <color name="GROUP-BORDER" red="150" green="155" blue="151">
+      </color>
+    </line_color>
+    <background_color>
+      <color name="GROUP-BACKGROUND" red="200" green="205" blue="201">
+      </color>
+    </background_color>
+    <corner_width>3</corner_width>
+    <corner_height>3</corner_height>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label</name>
+    <class>HEADER2</class>
+    <text>Process Diagnostic</text>
+    <x>30</x>
+    <y>610</y>
+    <width>350</width>
+    <height>50</height>
+    <font use_class="true">
+      <font name="Header 2" family="Source Sans Pro" style="BOLD_ITALIC" size="21.0">
+      </font>
+    </font>
+    <horizontal_alignment>1</horizontal_alignment>
+    <vertical_alignment>1</vertical_alignment>
+  </widget>
+  <widget type="rectangle" version="2.0.0">
+    <name>BGGrey01-background</name>
+    <x>30</x>
+    <y>660</y>
+    <width>350</width>
+    <height>130</height>
+    <line_width>2</line_width>
+    <line_color>
+      <color name="GROUP-BORDER" red="150" green="155" blue="151">
+      </color>
+    </line_color>
+    <background_color>
+      <color name="BACKGROUND" red="220" green="225" blue="221">
+      </color>
+    </background_color>
+    <corner_width>5</corner_width>
+    <corner_height>5</corner_height>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label</name>
+    <class>CAPTION</class>
+    <text>scan delay:</text>
+    <x>40</x>
+    <y>670</y>
+    <height>30</height>
+    <foreground_color use_class="true">
+      <color name="Text" red="25" green="25" blue="25">
+      </color>
+    </foreground_color>
+    <horizontal_alignment use_class="true">2</horizontal_alignment>
+    <vertical_alignment use_class="true">1</vertical_alignment>
+  </widget>
+  <widget type="textentry" version="3.0.0">
+    <name>Text Entry</name>
+    <pv_name>$(P)$(R)ScanDelay</pv_name>
+    <x>150</x>
+    <y>670</y>
+    <height>30</height>
+    <horizontal_alignment>1</horizontal_alignment>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label</name>
+    <class>CAPTION</class>
+    <text>scan time:</text>
+    <x>40</x>
+    <y>710</y>
+    <height>30</height>
+    <foreground_color use_class="true">
+      <color name="Text" red="25" green="25" blue="25">
+      </color>
+    </foreground_color>
+    <horizontal_alignment use_class="true">2</horizontal_alignment>
+    <vertical_alignment use_class="true">1</vertical_alignment>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>Text Entry</name>
+    <pv_name>$(P)$(R)ScanTime</pv_name>
+    <x>150</x>
+    <y>710</y>
+    <height>30</height>
+    <horizontal_alignment>1</horizontal_alignment>
+    <vertical_alignment>1</vertical_alignment>
+    <wrap_words>false</wrap_words>
+    <actions>
+    </actions>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <border_width>2</border_width>
+    <border_color>
+      <color name="GRAY-BORDER" red="121" green="121" blue="121">
+      </color>
+    </border_color>
+  </widget>
+  <widget type="slide_button" version="2.0.0">
+    <name>Slide Button</name>
+    <pv_name>$(P)$(R)mesMode-SP</pv_name>
+    <bit>-1</bit>
+    <label>Continuous</label>
+    <x>150</x>
+    <y>300</y>
+    <on_color>
+      <color name="On" red="70" green="255" blue="70">
+      </color>
+    </on_color>
+    <actions>
+    </actions>
+    <rules>
+      <rule name="Label" prop_id="label" out_exp="false">
+        <exp bool_exp="pv0 == 1">
+          <value>Trace</value>
+        </exp>
+        <pv_name>$(P)$(R)mesMode-SP</pv_name>
+      </rule>
+    </rules>
+    <confirm_message>Are you sure you want to do this?</confirm_message>
+  </widget>
+  <widget type="bool_button" version="2.0.0">
+    <name>Boolean Button</name>
+    <pv_name>$(P)$(R)mes</pv_name>
+    <x>30</x>
+    <y>120</y>
+    <width>350</width>
+    <height>50</height>
+    <font>
+      <font name="Header 2" family="Source Sans Pro" style="BOLD_ITALIC" size="21.0">
+      </font>
+    </font>
+    <labels_from_pv>true</labels_from_pv>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label</name>
+    <class>CAPTION</class>
+    <text>Status:</text>
+    <x>40</x>
+    <y>750</y>
+    <height>30</height>
+    <foreground_color use_class="true">
+      <color name="Text" red="25" green="25" blue="25">
+      </color>
+    </foreground_color>
+    <horizontal_alignment use_class="true">2</horizontal_alignment>
+    <vertical_alignment use_class="true">1</vertical_alignment>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>Text Entry</name>
+    <pv_name>$(P)$(R)Connected-RB</pv_name>
+    <x>150</x>
+    <y>750</y>
+    <height>30</height>
+    <format>6</format>
+    <show_units>false</show_units>
+    <horizontal_alignment>1</horizontal_alignment>
+    <vertical_alignment>1</vertical_alignment>
+    <wrap_words>false</wrap_words>
+    <actions>
+    </actions>
+    <border_width>2</border_width>
+    <border_color>
+      <color name="GRAY-BORDER" red="121" green="121" blue="121">
+      </color>
+    </border_color>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label</name>
+    <class>CAPTION</class>
+    <text>Function:</text>
+    <x>40</x>
+    <y>300</y>
+    <height>30</height>
+    <foreground_color use_class="true">
+      <color name="Text" red="25" green="25" blue="25">
+      </color>
+    </foreground_color>
+    <horizontal_alignment use_class="true">2</horizontal_alignment>
+    <vertical_alignment use_class="true">1</vertical_alignment>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>Text Update</name>
+    <pv_name>TS2-010:Ctrl-EVM-101:Timestamp-RB</pv_name>
+    <x>900</x>
+    <y>830</y>
+    <width>300</width>
+    <height>40</height>
+    <font>
+      <font family="Source Sans Pro Semibold" style="REGULAR" size="18.0">
+      </font>
+    </font>
+    <horizontal_alignment>1</horizontal_alignment>
+    <vertical_alignment>1</vertical_alignment>
+    <border_width>2</border_width>
+    <border_color>
+      <color name="GRAY-BORDER" red="121" green="121" blue="121">
+      </color>
+    </border_color>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>Text Update</name>
+    <pv_name>$(P)$(R)Manufactor-RB</pv_name>
+    <x>430</x>
+    <y>830</y>
+    <width>460</width>
+    <height>40</height>
+    <font>
+      <font family="Source Sans Pro Semibold" style="REGULAR" size="18.0">
+      </font>
+    </font>
+    <show_units>false</show_units>
+    <horizontal_alignment>1</horizontal_alignment>
+    <vertical_alignment>1</vertical_alignment>
+    <border_width>2</border_width>
+    <border_color>
+      <color red="0" green="128" blue="255">
+      </color>
+    </border_color>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label</name>
+    <text></text>
+    <x>260</x>
+    <y>300</y>
+    <height>30</height>
+    <horizontal_alignment>1</horizontal_alignment>
+    <vertical_alignment>1</vertical_alignment>
+    <rules>
+      <rule name="Text" prop_id="text" out_exp="false">
+        <exp bool_exp="pv0 == 0">
+          <value>Continuous</value>
+        </exp>
+        <exp bool_exp="pv0 == 1">
+          <value>Trace</value>
+        </exp>
+        <pv_name>$(P)$(R)mesMode-RB</pv_name>
+      </rule>
+    </rules>
+    <border_width>2</border_width>
+    <border_color>
+      <color name="GRAY-BORDER" red="121" green="121" blue="121">
+      </color>
+    </border_color>
+  </widget>
+</display>
